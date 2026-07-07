@@ -35,7 +35,10 @@ resource "aws_instance" "wazuh-server" {
   vpc_security_group_ids = [aws_security_group.wazuh-server.id]
 
   root_block_device {
-    volume_size = 20
+    # 20GB filled to 92% almost immediately — the base manager+indexer+dashboard
+    # install alone takes ~12GB. Bumped 2026-07-07 after finding this the hard
+    # way; gp3 is ~$0.08/GB/month, the extra 30GB is trivial compared to compute.
+    volume_size = 50
     volume_type = "gp3"
   }
 
