@@ -35,14 +35,16 @@
         update_cache: yes
 
     - name: Install Wazuh agent
-      # Pinned to match the manager's version exactly (4.12.0, from the manager
-      # playbook's install script) — the 4.x repo channel is rolling and
-      # defaults to the newest release, which Wazuh's own manager rejects
-      # ("Agent version must be lower or equal to manager version"). Confirmed
-      # 2026-07-07 the hard way: 4.14.6 agent vs 4.12.0 manager, enrollment
-      # refused. If the manager version ever changes, this must be updated too.
+      # Pinned to match the manager's version exactly (4.14.6, upgraded from
+      # 4.12.0 on 2026-07-14 — indexer/manager/filebeat/dashboard all bumped
+      # together per Wazuh's official order) — the 4.x repo channel is rolling
+      # and defaults to the newest release, which Wazuh's own manager rejects
+      # if it's ever ahead of the agent ("Agent version must be lower or equal
+      # to manager version"). Confirmed 2026-07-07 the hard way: 4.14.6 agent
+      # vs 4.12.0 manager, enrollment refused. If the manager version ever
+      # changes, this must be updated too.
       apt:
-        name: wazuh-agent=4.12.0-1
+        name: wazuh-agent=4.14.6-1
         state: present
       environment:
         WAZUH_MANAGER: "{{ wazuh_manager_ip }}"
