@@ -48,7 +48,10 @@
         state: present
       environment:
         WAZUH_MANAGER: "{{ wazuh_manager_ip }}"
-        WAZUH_AGENT_NAME: "honeypot-ec2"
+        # Was "honeypot-ec2" — stale/confusing, this box's actual honeypot data
+        # collection stopped 2026-06-30 (SSH went key-only + admin-IP-restricted,
+        # see GAMEPLAN 2026-07-07). Renamed to match the box's real identity.
+        WAZUH_AGENT_NAME: "py-bite"
 
     - name: Enable and start Wazuh agent
       systemd:
